@@ -7,8 +7,7 @@ import type {ChemUIListItemType, ChemUITextItemType, ChemUIModuleItemType} from 
 import {useEffect, useState} from "react";
 const ListComp = (props: ComponentProps) => {
     const {args} = props
-    const {data} = args
-    console.log(data)
+    const {data, staticResourcesUrl = ""} = args
     const [moduleItemList, setModuleItemList] = useState<ChemUIModuleItemType[]>(
         [],
     );
@@ -33,7 +32,7 @@ const ListComp = (props: ComponentProps) => {
                     csv: {
                         smilesOptions: {
                             locateFile: (file: string) => {
-                                return `/${file}`;
+                                return `${staticResourcesUrl}/${file}`;
                             },
                         },
                     },

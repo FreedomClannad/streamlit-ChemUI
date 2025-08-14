@@ -5,7 +5,7 @@ import streamlit.components.v1 as components
 # the component, and True when we're ready to package and distribute it.
 # (This is, of course, optional - there are innumerable ways to manage your
 # release process.)
-_RELEASE = False
+_RELEASE = True
 
 # Declare a Streamlit component. `declare_component` returns a function
 # that is used to create instances of the component. We're naming this
@@ -29,6 +29,7 @@ if not _RELEASE:
         # (This is useful while your component is in development.)
         url="http://localhost:3001",
     )
+    staticResourcesUrl=''
 else:
     # When we're distributing a production version of the component, we'll
     # replace the `url` param with `path`, and point it to the component's
@@ -36,6 +37,7 @@ else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "frontend/build")
     _component_func = components.declare_component("chemui", path=build_dir)
+    staticResourcesUrl="/component/chemui.chemui"
 
 
 # Create a wrapper function for the component. This is an optional
@@ -76,9 +78,9 @@ def my_component(name, key=None):
     # There's no need to do this in our simple example - but it's an option.
     return component_value
 def ChemList(data, key=None):
-    component = _component_func(component="List",data=data, key=key, default=0)
+    component = _component_func(component="List",data=data,  staticResourcesUrl=staticResourcesUrl, key=key, default=0)
     return component
 
 def Smiles(smiles, key=None):
-    component = _component_func(component="MoleculeStructure",smiles=smiles, key=key, default=0)
+    component = _component_func(component="MoleculeStructure",smiles=smiles, staticResourcesUrl=staticResourcesUrl, key=key, default=0)
     return component
